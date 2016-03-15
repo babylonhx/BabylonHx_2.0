@@ -320,8 +320,8 @@ import com.babylonhx.tools.SmartArray;
 				}
 				
 				// Bones
-				if (mesh.useBones) {
-					this._volumetricLightScatteringPass.setMatrices("mBones", mesh.skeleton.getTransformMatrices());
+				if (mesh.useBones && mesh != null) {
+					this._volumetricLightScatteringPass.setMatrices("mBones", mesh.skeleton.getTransformMatrices(mesh));
 				}
 				
 				// Draw

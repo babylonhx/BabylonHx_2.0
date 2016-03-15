@@ -26,9 +26,9 @@ package com.babylonhx.tools;
 	inline public function push(value:T):Void {
 		this.data[this.length++] = value;
 		
-		/*if (untyped value.__smartArrayFlags == null) {
+		if (untyped value.__smartArrayFlags == null) {
 			untyped value.__smartArrayFlags = [];
-		}*/
+		}
 		
 		untyped value.__smartArrayFlags[this._id] = this._duplicateId;
 	}

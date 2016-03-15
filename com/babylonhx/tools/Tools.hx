@@ -445,7 +445,7 @@ typedef Assets = nme.Assets;
 			callBackFunction(data);	
 		}
 		else if (type == "" || type == "text") {
-			/*#if ((html5 || js) && (lime || openfl))
+			#if ((html5 || js) && (lime || openfl))
 			if (Assets.exists(path)) {
 							
 				var callBackFunction = callbackFn != null ?
@@ -461,7 +461,7 @@ typedef Assets = nme.Assets;
 			else {
 				trace("File '" + path + "' doesn't exist!");
 			}
-			#else*/
+			#else
 			var callBackFunction = callbackFn != null ?
 					function(result:Dynamic) {
 						callbackFn(result);
@@ -469,7 +469,7 @@ typedef Assets = nme.Assets;
 					
 				var data = Assets.getText(path);
 				callBackFunction(data);			
-			//#end
+			#end
 		} 
 		else {
 			#if (lime || openfl)

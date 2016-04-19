@@ -89,9 +89,15 @@ import com.babylonhx.animations.Animation;
 		this.position = position;
 		scene.addCamera(this);
 		
+		#if (openfl || nme)
+		if (name != "openfl_nme_dummycamera") {
+		#end
 		if (scene.activeCamera == null) {
 			scene.activeCamera = this;
 		}
+		#if (openfl || nme)
+		}
+		#end
 		
 		this.getProjectionMatrix = getProjectionMatrix_default;
 		this._getViewMatrix = _getViewMatrix_default;
@@ -400,7 +406,7 @@ import com.babylonhx.animations.Animation;
 		return this._projectionMatrix;
 	}
 	
-	public function dispose() {
+	override public function dispose(doNotRecurse:Bool = false) {
 		// Animations
         this.getScene().stopAnimation(this);
 		
@@ -414,6 +420,8 @@ import com.babylonhx.animations.Animation;
 		for (i in 0...this._postProcessesTakenIndices.length) {
 			this._postProcesses[this._postProcessesTakenIndices[i]].dispose(this);
 		}
+		
+		super.dispose();
 	}
 	
 	// ---- Camera rigs section ----

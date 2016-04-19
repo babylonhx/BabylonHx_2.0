@@ -128,6 +128,9 @@ import com.babylonhx.utils.typedarray.Float32Array;
 
 	public var layerMask:Int = 0x0FFFFFFF;
 	
+	// for bGUI
+	public var __gui:Bool = false;
+	
 	public var alwaysSelectAsActiveMesh:Bool = false;
 
 	// Physics
@@ -355,10 +358,10 @@ import com.babylonhx.utils.typedarray.Float32Array;
 		return this._boundingInfo;
 	}
 	
-	public function _preActivate() {
-		
-	}
-
+	public function _preActivate() { }
+	
+	public function _preActivateForIntermediateRendering(renderId:Int) { }
+	
 	public function _activate(renderId:Int) {
 		this._renderId = renderId;
 	}
@@ -674,7 +677,25 @@ import com.babylonhx.utils.typedarray.Float32Array;
 		
 		// Billboarding
 		if (this.billboardMode != AbstractMesh.BILLBOARDMODE_NONE && this.getScene().activeCamera != null) {
-			var localPosition = this.position.clone();
+			Tmp.vector3[0].copyFrom(this.position);
+			var localPosition = Tmp.vector3[0];
+			
+			if (this.parent != null && this.parent.getWorldMatrix() != null) {
+				this._markSyncedWithParent();
+				
+				var parentMatrix:Matrix = null;
+				if (this._meshToBoneReferal != null) {
+					this.parent.getWorldMatrix().multiplyToRef(this._meshToBoneReferal.getWorldMatrix(), Tmp.matrix[6]);
+					parentMatrix = Tmp.matrix[6];
+				} 
+				else {
+					parentMatrix = this.parent.getWorldMatrix();
+				}
+				
+				Vector3.TransformCoordinatesToRef(localPosition, parentMatrix, Tmp.vector3[1]);
+				localPosition = Tmp.vector3[1];
+			}
+			
 			var zero = this.getScene().activeCamera.globalPosition.clone();
 			
 			if (this.parent != null && Reflect.hasField(this.parent, "position")) {
@@ -1087,9 +1108,10 @@ import com.babylonhx.utils.typedarray.Float32Array;
 			var subMesh = subMeshes[index];
 			
 			// Bounding test
-			if (len > 1 && !subMesh.canIntersects(ray))
+			if (len > 1 && !subMesh.canIntersects(ray)) {
 				continue;
-				
+			}
+			
 			var currentIntersectInfo = subMesh.intersects(ray, this._positions, this.getIndices(), fastCheck);
 			
 			if (currentIntersectInfo != null) {
@@ -1143,7 +1165,7 @@ import com.babylonhx.utils.typedarray.Float32Array;
 		}
 	}
 
-	public function dispose(doNotRecurse:Bool = false) {
+	override public function dispose(doNotRecurse:Bool = false) {
 		// Animations
         this.getScene().stopAnimation(this);
 		
@@ -1151,7 +1173,7 @@ import com.babylonhx.utils.typedarray.Float32Array;
 		if (this.getPhysicsImpostor() != PhysicsEngine.NoImpostor) {
 			this.setPhysicsState(PhysicsEngine.NoImpostor);
 		}
-				
+		
 		// Intersections in progress
 		for (index in 0...this._intersectionsInProgress.length) {
 			var other = this._intersectionsInProgress[index];
@@ -1160,6 +1182,23 @@ import com.babylonhx.utils.typedarray.Float32Array;
 		}
 		
 		this._intersectionsInProgress = [];
+		
+		// Lights
+		var lights = this.getScene().lights;
+		
+		for (light in lights) {
+			var meshIndex = light.includedOnlyMeshes.indexOf(this);
+			
+			if (meshIndex != -1) {
+				light.includedOnlyMeshes.splice(meshIndex, 1);
+			}
+			
+			meshIndex = light.excludedMeshes.indexOf(this);
+			
+			if (meshIndex != -1) {
+				light.excludedMeshes.splice(meshIndex, 1);
+			}
+		}
 		
 		// Edges
 		if (this._edgesRenderer != null) {
@@ -1209,6 +1248,8 @@ import com.babylonhx.utils.typedarray.Float32Array;
 		if (this.onDispose != null) {
 			this.onDispose();
 		}
+		
+		super.dispose();
 	}
 	
 }

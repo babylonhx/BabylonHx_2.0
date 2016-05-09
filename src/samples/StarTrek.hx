@@ -22,7 +22,7 @@ import com.babylonhx.loading.SceneLoader;
 import com.babylonhx.materials.textures.procedurals.standard.StarfieldProceduralTexture;
 /**
  * ...
- * @author Krtolica Vujadin
+ * @author Brendon Smith
  */
 
 class StarTrek {
@@ -32,12 +32,7 @@ class StarTrek {
 		this.scene = scene;
 		var camera = new FreeCamera("Camera", new Vector3(0, 4, -20), scene);
 		camera.attachControl(this, false);
-		//camera.rotation.x = -1.5;
-		SceneLoader.ImportMesh("", "assets/models/", "enterprise.babylon", scene, this.onSuccess
-		/*, function(_wtf:Dynamic){}), 
-		function(scene:Scene, e:Dynamic){
-	    	untyped console.log(e);
-		})*/ );
+		SceneLoader.ImportMesh("", "assets/models/", "enterprise.babylon", scene, this.onSuccess);
 
 
 	var hemisphericLight = new HemisphericLight("hemi", new Vector3(0, 0.5, 0), scene);
@@ -55,7 +50,6 @@ class StarTrek {
 	space.material = starfieldMaterial;
 
 		scene.registerBeforeRender(function(scene:Scene, es:Null<EventState>){
-	    	//untyped  starfieldPT._time += scene.getAnimationRatio() * 0.8;
 	    	untyped starfieldPT.set_time(starfieldPT.get_time() + scene.getAnimationRatio() * 0.8);
 		});
 		
@@ -77,7 +71,6 @@ class StarTrek {
 		   _spaceShip[0].scaling.z = 5;
 		   this.generateParticleSystem(newScene[0]);
 		   this.generateParticleSystem(newScene[1]);
-
 	}
 
 	public function generateParticleSystem(emitter:Dynamic){

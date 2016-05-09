@@ -171,6 +171,7 @@ import nme.display.OpenGLView;
 	public static var onResize:Array<Void->Void> = [];
 	
 	#if (js || purejs)
+	public static var app:Dynamic;
 	public var audioEngine:AudioEngine = new AudioEngine();
 	#end
 	
@@ -188,6 +189,7 @@ import nme.display.OpenGLView;
         }
 		
 		#if purejs
+
 		GL.context = cast(canvas, js.html.CanvasElement).getContext("webgl", options.antialiasing);
 		#end
 		

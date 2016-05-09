@@ -29,13 +29,14 @@ import com.babylonhx.Scene;
 	public function new() {
 		untyped Browser.navigator.isCocoonJS = true;
 		canvas = Browser.document.createCanvasElement();
+		untyped Engine.app = canvas;
 		canvas.width = Browser.window.innerWidth;
 		canvas.height = Browser.window.innerHeight;
 		Browser.document.body.appendChild(canvas);
 		
 		engine = new Engine(canvas, false);	
-		engine.width = canvas.width;
-		engine.height = canvas.height;
+		Engine.width = 960;
+		Engine.height = 640;
 		scene = new Scene(engine);
 				
 		Browser.window.addEventListener("resize", resize);
@@ -103,7 +104,7 @@ import com.babylonhx.Scene;
 		//new samples.Particles3(scene);
 		//new samples.Extrusion(scene);
 		//new samples.Sprites(scene);
-		//new samples.PostprocessBloom(scene);
+		new samples.PostprocessBloom(scene);
 		//new samples.PostprocessRefraction(scene);
 		//new samples.PostprocessConvolution(scene);
 		//new samples.GodRays(scene);
@@ -126,8 +127,9 @@ import com.babylonhx.Scene;
 		//new samples.WaterMat(scene);
 		//new samples.LavaMat(scene);
 		//new samples.NormalMat(scene);
-		new samples.PythagorianThrees(scene);
+		//new samples.PythagorianThrees(scene);
 		//new samples.Particles4(scene);
+		//new samples.PBRMaterialTest5(scene);
 	}
 	
 	function resize(e) {

@@ -67,9 +67,11 @@ class HDRTools {
 		var width:Int = 0;
 		
 		var line = HDRTools.readStringLine(uint8array, 0);
+		
 		if (line.charAt(0) != '#' || line.charAt(1) != '?') {
 			throw "Bad HDR Format.";
 		}
+		
 		
 		var endOfHeader = false;
 		var findFormat = false;
@@ -122,24 +124,13 @@ class HDRTools {
 	}
 
 	public static function GetCubeMapTextureData(buffer:Dynamic, size:Int):CubeMapInfo {
-		/*#if (js || purejs || web || html5)
-		var str2ab = function(s:String):UInt8Array {
-			var str = s + "";
-			var buf = new Array<UInt>();
-			
-			for (i in 0...str.length * 2) {
-				buf.push(str.charCodeAt(i));
-			}
-			var bufView = new UInt8Array(buf);
-			
-			return bufView;
-		}
-		var uint8array = str2ab(buffer);
-		#else*/
+		#if ((js || purejs || web || html5) && !snow)
+		var uint8array:UInt8Array  =  new UInt8Array(buffer, 0);
+		#else
 		var uint8array:UInt8Array = cast buffer;
-		//#end
+		#end
 		var hdrInfo = HDRTools.RGBE_ReadHeader(uint8array);
-		var data = HDRTools.RGBE_ReadPixels_RLE( #if (js || purejs || web || html5) cast buffer #else uint8array #end , hdrInfo);
+		var data = HDRTools.RGBE_ReadPixels_RLE( uint8array  , hdrInfo);
 		
 		var cubeMapData = PanoramaToCubeMapTools.ConvertPanoramaToCubemap(data, hdrInfo.width, hdrInfo.height, size);
 		
@@ -163,10 +154,10 @@ class HDRTools {
 		var dataIndex = hdrInfo.dataPosition;
 		var index:Int = 0;
 		var endIndex:Int = 0;
-		
 		var scanLineArrayBuffer = new ArrayBuffer(scanline_width * 4); // four channel R G B E
-		var scanLineArray = new UInt8Array(scanLineArrayBuffer);
+		var scanLineArray = new UInt8Array(scanLineArrayBuffer, 0);
 		
+
 		// 3 channels of 4 bytes per pixel in float.
 		var resultBuffer = new ArrayBuffer(hdrInfo.width * hdrInfo.height * 4 * 3); 
 		var resultArray = new Float32Array(resultBuffer);

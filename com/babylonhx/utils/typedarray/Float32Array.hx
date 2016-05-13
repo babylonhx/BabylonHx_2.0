@@ -4,7 +4,7 @@ package com.babylonhx.utils.typedarray;
  * @author Krtolica Vujadin
  */
 
-#if purejs
+#if ((js || purejs || web || html5) && !emscripten) 
 
 	typedef Float32Array = js.html.Float32Array;
 
@@ -16,7 +16,7 @@ package com.babylonhx.utils.typedarray;
 
 	typedef Float32Array = openfl.utils.Float32Array;	
 	
-#elseif lime
+#elseif (lime || emscripten)
 
 	typedef Float32Array = lime.utils.Float32Array;
 	

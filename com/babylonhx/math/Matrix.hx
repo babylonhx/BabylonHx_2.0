@@ -20,19 +20,11 @@ import haxe.ds.Vector;
 	private static var _yAxis:Vector3 = Vector3.Zero();
 	private static var _zAxis:Vector3 = Vector3.Zero();
 
-	#if (js || html5 || purejs)
 	public var m:Float32Array;
-	#else
-	public var m:Array<Float>;	
-	#end
 	
 	
 	inline public function new() {
-		#if (js || html5 || purejs)
 		m = new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
-		#else
-		m = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
-		#end
 	}
 	
 	public function toString():String {
@@ -67,11 +59,11 @@ import haxe.ds.Vector;
 	}
 
 	// Methods
-	inline public function toArray(): #if (js || html5 || purejs) Float32Array #else Array<Float> #end {
+	inline public function toArray():Float32Array{
 		return this.m;
 	}
 
-	inline public function asArray(): #if (js || html5 || purejs) Float32Array #else Array<Float> #end {
+	inline public function asArray():Float32Array{
 		return #if (js || html5 || purejs) m #else m #end ;
 	}
 
@@ -201,7 +193,7 @@ import haxe.ds.Vector;
 		return this;
 	}
 
-	inline public function copyToArray(array: #if (js || html5 || purejs) Float32Array #else Array<Float> #end, offset:Int = 0) {
+	inline public function copyToArray(array:Float32Array, offset:Int = 0) {
 		for (index in 0...16) {
 			array[offset + index] = this.m[index];
 		}
@@ -213,7 +205,7 @@ import haxe.ds.Vector;
 		return this;
 	}
 
-	inline public function multiplyToArray(other:Matrix, result: #if (js || html5 || purejs) Float32Array #else Array<Float> #end, offset:Int) {	
+	inline public function multiplyToArray(other:Matrix, result:Float32Array, offset:Int) {	
 		var tm = this.m;
 		var om = other.m;
 		result[offset] = tm[0] * om[0] + tm[1] * om[4] + tm[2] * om[8] + tm[3] * om[12];

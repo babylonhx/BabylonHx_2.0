@@ -5,7 +5,7 @@ import com.babylonhx.math.Vector3;
 import com.babylonhx.math.Quaternion;
 import com.babylonhx.cameras.VRCameraMetrics;
 
-#if (js || web || html5 || purejs)
+#if ((js || web || html5 || purejs)&& !emscripten)
 import js.Browser;
 #end
 
@@ -31,7 +31,7 @@ import js.Browser;
 	}
 
 	public function _onOrientationEvent(evt:Dynamic) {
-		#if (js || web || html5 || purejs)
+		#if ((js || web || html5 || purejs) && !emscripten)
 		this._alpha = untyped __js__("+evt.alpha | 0;");
 		this._beta = untyped __js__("+evt.beta | 0;");
 		this._gamma = untyped __js__("+evt.gamma | 0;");
@@ -53,7 +53,7 @@ import js.Browser;
 	public override function attachControl(?element:Dynamic, noPreventDefault:Bool = false, useCtrlForPanning:Bool = true, enableKeyboard:Bool = true): Void {
 		super.attachControl(element, noPreventDefault);
 		
-		#if (js || web || html5 || purejs)
+		#if ((js || web || html5 || purejs) && !emscripten)
 		untyped window.addEventListener("deviceorientation", this._onOrientationEvent);
 		#end
 	}
@@ -61,7 +61,7 @@ import js.Browser;
 	public override function detachControl(?element:Dynamic): Void {
 		super.detachControl(element);
 		
-		#if (js || web || html5 || purejs)
+		#if ((js || web || html5 || purejs) && !emscripten)
 		untyped window.removeEventListener("deviceorientation", this._onOrientationEvent);
 		#end
 	}

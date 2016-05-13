@@ -27,7 +27,7 @@ import haxe.ds.Vector;
 
 	private var _scene:Scene;
 	private var _isDirty:Bool = true;
-	private var _transformMatrices: #if (js || purejs || web || html5) Float32Array #else Array<Float> #end ;
+	private var _transformMatrices:Float32Array;
 	private var _meshesWithPoseMatrix:Array<AbstractMesh> = [];
 	private var _animatables:Array<IAnimatable>;
 	private var _identity:Matrix = Matrix.Identity();
@@ -164,7 +164,7 @@ import haxe.ds.Vector;
 		return ret;
 	}
 	
-	inline public function getTransformMatrices(mesh:AbstractMesh): #if (js || purejs || web || html5) Float32Array #else Array<Float> #end {
+	inline public function getTransformMatrices(mesh:AbstractMesh):Float32Array {
 		if (this.needInitialSkinMatrix && mesh._bonesTransformMatrices != null) {
 			return mesh._bonesTransformMatrices;
 		}
@@ -199,7 +199,7 @@ import haxe.ds.Vector;
 		}
 		
 		if (this._transformMatrices == null || this._transformMatrices.length != 16 * (this.bones.length + 1)) {
-			this._transformMatrices = #if (js || html5 || purejs) new Float32Array(16 * (this.bones.length + 1)) #else [] #end ;
+			this._transformMatrices = new Float32Array(16 * (this.bones.length + 1));
 		}
 		
 		for (index in 0...this.bones.length) {

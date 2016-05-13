@@ -282,7 +282,7 @@ import com.babylonhx.utils.typedarray.Float32Array;
 			var index:Int = 0;
 			while (index < this._samplers.length) {				
                 var sampler = this.getUniform(this._samplers[index]);	
-				#if (js || purejs || html5 || web || snow || nme || neko)
+				#if ((js || purejs || html5 || web || snow || nme || neko) && !emscripten)
 				if (sampler == null) {
 				#else // openfl/lime
 				if ( #if legacy sampler != null && #end cast(sampler, Int) < 0) {
@@ -419,7 +419,7 @@ import com.babylonhx.utils.typedarray.Float32Array;
         return this;
     }
 
-	inline public function setMatrices(uniformName:String, matrices: #if (js || purejs) Float32Array #else Array<Float> #end ):Effect {
+	inline public function setMatrices(uniformName:String, matrices: Float32Array):Effect {
 		this._engine.setMatrices(this.getUniform(uniformName), matrices);
 		
 		return this;

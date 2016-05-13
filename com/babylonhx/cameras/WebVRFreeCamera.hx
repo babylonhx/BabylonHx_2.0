@@ -5,7 +5,7 @@ import com.babylonhx.math.Vector3;
 import com.babylonhx.math.Quaternion;
 import com.babylonhx.cameras.VRCameraMetrics;
 
-#if (js || purejs || web || html5) 
+#if ((js || purejs || web || html5) && !emscripten)
 import js.Browser;
 import js.html.Navigator;
 #end
@@ -78,7 +78,7 @@ import js.html.Navigator;
 	
 	override public function attachControl(?element:Dynamic, noPreventDefault:Bool = false, useCtrlForPanning:Bool = false, enableKeyboard:Bool = true) {
 		super.attachControl(element, noPreventDefault);
-		#if (js || purejs || web || html5) 
+		#if ((js || purejs || web || html5) && !emscripten)
 		var nav:Navigator = untyped Browser.window.navigator;
 		if (untyped nav.getVRDevices != null) {
 			untyped nav.getVRDevices().then(this._getWebVRDevices);

@@ -837,7 +837,7 @@ import nme.display.OpenGLView;
 	}
 
 
-	public function updateAndBindInstancesBuffer(instancesBuffer:WebGLBuffer, data: #if (js || html5 || purejs) Float32Array #else Array<Float> #end , offsetLocations:Array<Int>) {
+	public function updateAndBindInstancesBuffer(instancesBuffer:WebGLBuffer, data:Float32Array, offsetLocations:Array<Int>) {
 		GL.bindBuffer(GL.ARRAY_BUFFER, instancesBuffer.buffer);
 		
 		#if (js || html5 || purejs) 
@@ -996,7 +996,7 @@ import nme.display.OpenGLView;
 		
 		for (name in uniformsNames) {
 			var uniform = GL.getUniformLocation(shaderProgram, name);
-			#if (purejs || js || html5 || web || snow)
+			#if ((purejs || js || html5 || web || snow) && !emscripten)
 			if (uniform != null) {
 			#else 
 			if (uniform != -1) {
@@ -1085,8 +1085,8 @@ import nme.display.OpenGLView;
 		}
     }
 
-	inline public function setMatrices(uniform:GLUniformLocation, matrices: #if (js || purejs) Float32Array #else Array<Float> #end ) {
-		GL.uniformMatrix4fv(uniform, false, #if (js || purejs) matrices #else new Float32Array(matrices) #end);
+	inline public function setMatrices(uniform:GLUniformLocation, matrices:Float32Array) {
+		GL.uniformMatrix4fv(uniform, false, new Float32Array(matrices) );
 	}
 
 	inline public function setMatrix(uniform:GLUniformLocation, matrix:Matrix) {	
@@ -1443,11 +1443,21 @@ import nme.display.OpenGLView;
 			scene._removePendingData(texture);
 		};
 		
+		#if (purejs)
+		Tools.LoadFile(url, function(data:Dynamic) {
+			internalCallback(data);
+		}, onProgress, null, true);
+		#else
 		Tools.LoadFile(url, function(data:Dynamic) {
 			internalCallback(data);
 		}, "hdr");
+		#end
 		
 		return texture;
+	}
+
+	public function onProgress  (info:Dynamic):Void {
+		//todo
 	}
 		
 	public function createRawTexture(data:ArrayBufferView, width:Int, height:Int, format:Int, generateMipMaps:Bool, invertY:Bool, samplingMode:Int, compression:String = ""):WebGLTexture {
@@ -1575,7 +1585,7 @@ import nme.display.OpenGLView;
 	}
 
 	public function updateVideoTexture(texture:WebGLTexture, video:Dynamic, invertY:Bool) {
-        #if (html5 || js || web || purejs)
+        #if ((html5 || js || web || purejs)&& !emscripten)
 		
         if (texture._isDisabled) {
             return;

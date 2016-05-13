@@ -10,7 +10,7 @@ import com.babylonhx.Scene;
 
 @:expose('BABYLON.VideoTexture') class VideoTexture extends Texture {
 
-   #if (html5 || js || web || purejs)
+   #if ((html5 || js || web || purejs) && !emscripten)
 
     public var video:js.html.VideoElement;
 

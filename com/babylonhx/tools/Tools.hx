@@ -208,7 +208,7 @@ typedef Assets = nme.Assets;
 			
 			request.onreadystatechange = function(e) {
 				if (request.readyState == 4) {
-					if (request.status == 200/* || Tools.ValidateXHRData(request, !useArrayBuffer ? 1 : 6)*/) {
+					if (request.status == 200 /*|| untyped Tools.ValidateXHRData(request, untyped !useArrayBuffer ? 1 : 6)*/) {
 						callbackFn(!useArrayBuffer ? request.responseText : request.response);
 					} 
 					else { // Failed
@@ -247,10 +247,10 @@ typedef Assets = nme.Assets;
 	// XHR response validator for local file scenario
 	public static function ValidateXHRData(xhr:XMLHttpRequest, dataType:Int = 7):Bool {
 		// 1 for text (.babylon, manifest and shaders), 2 for TGA, 4 for DDS, 7 for all
-		
-		/*try {
-			if (dataType & 1) {
-				if (xhr.responseText && xhr.responseText.length > 0) {
+		#if (purejs)
+		try {
+			if (untyped dataType & 1) {
+				if (untyped xhr.responseText && xhr.responseText.length > 0) {
 					return true;
 				}
 				else if (dataType == 1) {
@@ -258,11 +258,11 @@ typedef Assets = nme.Assets;
 				}
 			}
 			
-			if (dataType & 2) {
+			if (untyped dataType & 2) {
 				// Check header width and height since there is no "TGA" magic number
-				var tgaHeader = Internals.TGATools.GetTGAHeader(xhr.response);
+				var tgaHeader = untyped  Internals.TGATools.GetTGAHeader(xhr.response);
 				
-				if (tgaHeader.width && tgaHeader.height && tgaHeader.width > 0 && tgaHeader.height > 0) {
+				if (untyped  tgaHeader.width && untyped  tgaHeader.height && untyped  tgaHeader.width > 0 && untyped tgaHeader.height > 0) {
 					return true;
 				} 
 				else if (dataType == 2) {
@@ -270,7 +270,7 @@ typedef Assets = nme.Assets;
 				}
 			}
 			
-			if (dataType & 4) {
+			if (untyped dataType & 4) {
 				// Check for the "DDS" magic number
 				var ddsHeader = new UInt8Array(xhr.response, 0, 3);
 				
@@ -282,10 +282,10 @@ typedef Assets = nme.Assets;
 				}
 			}
 			
-		} catch (e) {
-			// Global protection
-		}*/
-		
+		} catch (e:Dynamic) {
+			trace(e);
+		}
+		#end
 		return false;
 	}
 	#elseif snow
@@ -374,7 +374,7 @@ typedef Assets = nme.Assets;
 				
 			app.assets.bytes(path).then(
 				function(result:Dynamic) {
-					trace(result.bytes);
+					//trace(result.bytes);
 					callBackFunction(result.bytes);	
 				}
 			);

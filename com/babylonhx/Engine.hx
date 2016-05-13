@@ -1443,11 +1443,21 @@ import nme.display.OpenGLView;
 			scene._removePendingData(texture);
 		};
 		
+		#if (purejs)
+		Tools.LoadFile(url, function(data:Dynamic) {
+			internalCallback(data);
+		}, onProgress, null, true);
+		#else
 		Tools.LoadFile(url, function(data:Dynamic) {
 			internalCallback(data);
 		}, "hdr");
+		#end
 		
 		return texture;
+	}
+
+	public function onProgress  (info:Dynamic):Void {
+		//todo
 	}
 		
 	public function createRawTexture(data:ArrayBufferView, width:Int, height:Int, format:Int, generateMipMaps:Bool, invertY:Bool, samplingMode:Int, compression:String = ""):WebGLTexture {

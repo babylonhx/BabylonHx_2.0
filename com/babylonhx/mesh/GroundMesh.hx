@@ -19,12 +19,12 @@ import com.babylonhx.math.Tmp;
 	private var _worldInverse:Matrix = new Matrix();
 	private var _heightQuads:Array<Dynamic>; // { slope: Vector2; facet1: Vector4; facet2: Vector4 } [];
 	public var _subdivisions:Int;
-	public var _width:Float;
-	public var _height:Float;
-	public var _minX:Float;
-	public var _maxX:Float;
-	public var _minZ:Float;
-	public var _maxZ:Float;
+	public var _width:Float = 10;
+	public var _height:Float = 10;
+	public var _minX:Float = 0;
+	public var _maxX:Float = 10;
+	public var _minZ:Float = 0;
+	public var _maxZ:Float = 10;
 	
 	public var subdivisions(get, never):Int;
 	
@@ -162,7 +162,7 @@ import com.babylonhx.math.Tmp;
 	// facet1 : Vector4(a, b, c, d) = first facet 3D plane equation : ax + by + cz + d = 0
 	// facet2 :  Vector4(a, b, c, d) = second facet 3D plane equation : ax + by + cz + d = 0
 	private function _computeHeightQuads() {
-		this._heightQuads = [];
+		//this._heightQuads = [];
 		var positions = this.getVerticesData(VertexBuffer.PositionKind);
 		var v1 = Tmp.vector3[0];
 		var v2 = Tmp.vector3[1];

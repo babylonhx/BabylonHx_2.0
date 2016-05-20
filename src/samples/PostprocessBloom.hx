@@ -13,6 +13,7 @@ import com.babylonhx.postprocess.BlurPostProcess;
 import com.babylonhx.postprocess.PassPostProcess;
 import com.babylonhx.postprocess.PostProcess;
 import com.babylonhx.Scene;
+import com.babylonhx.tools.EventState;
 
 /**
  * ...
@@ -68,14 +69,14 @@ class PostprocessBloom {
 		
 		var postProcess0 = new PassPostProcess("Scene copy", 1.0, camera);
 		var postProcess1 = new PostProcess("Down sample", "downsample", ["screenSize", "highlightThreshold"], null, 0.25, camera, Texture.BILINEAR_SAMPLINGMODE);
-		postProcess1.onApply = function (effect) {
+		postProcess1.onApply = function (effect:Dynamic, es:Null<EventState>) {
 			effect.setFloat2("screenSize", postProcess1.width, postProcess1.height);
 			effect.setFloat("highlightThreshold", 0.90);
 		};
 		var postProcess2 = new BlurPostProcess("Horizontal blur", new Vector2(1.0, 0), blurWidth, 0.25, camera);
 		var postProcess3 = new BlurPostProcess("Vertical blur", new Vector2(0, 1.0), blurWidth, 0.25, camera);
 		var postProcess4 = new PostProcess("Final compose", "compose", ["sceneIntensity", "glowIntensity", "highlightIntensity"], ["sceneSampler"], 1, camera);
-		postProcess4.onApply = function (effect) {
+		postProcess4.onApply = function (effect:Dynamic, es:Null<EventState>) {
 			effect.setTextureFromPostProcess("sceneSampler", postProcess0);
 			effect.setFloat("sceneIntensity", 0.5);
 			effect.setFloat("glowIntensity", 0.4);
@@ -84,7 +85,7 @@ class PostprocessBloom {
 		
 		// Animations
 		var alpha = 0.0;
-		scene.registerBeforeRender(function() {
+		scene.registerBeforeRender(function(scene:Scene, es:Null<EventState>){
 			sphere0.position = new Vector3(20 * Math.sin(alpha), 0, 20 * Math.cos(alpha));
 			sphere1.position = new Vector3(20 * Math.sin(alpha), 0, -20 * Math.cos(alpha));
 			sphere2.position = new Vector3(20 * Math.cos(alpha), 0, 20 * Math.sin(alpha));

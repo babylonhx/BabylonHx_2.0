@@ -14,7 +14,7 @@ import com.babylonhx.utils.typedarray.Float32Array;
 	public var x:Float;
 	public var y:Float;
 	public var z:Float;
-
+	
 
 	inline public function new(x:Float = 0, y:Float = 0, z:Float = 0) {
 		this.x = x;
@@ -42,6 +42,12 @@ import com.babylonhx.utils.typedarray.Float32Array;
 	}
 
 	inline public function toArray(array:Array<Float>, index:Int = 0) {
+		array[index] = this.x;
+		array[index + 1] = this.y;
+		array[index + 2] = this.z;
+	}
+	
+	inline public function toFloat32Array(array:Float32Array, index:Int = 0) {
 		array[index] = this.x;
 		array[index + 1] = this.y;
 		array[index + 2] = this.z;

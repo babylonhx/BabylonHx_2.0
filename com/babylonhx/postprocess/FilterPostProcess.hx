@@ -4,6 +4,8 @@ import com.babylonhx.cameras.Camera;
 import com.babylonhx.math.Matrix;
 import com.babylonhx.materials.Effect;
 import com.babylonhx.materials.textures.Texture;
+import com.babylonhx.tools.EventState;
+
 /**
  * ...
  * @author Krtolica Vujadin
@@ -19,7 +21,7 @@ import com.babylonhx.materials.textures.Texture;
 
 		this.kernelMatrix = kernelMatrix;
 		
-		this.onApply = function(effect:Effect) {
+		this.onApply = function(effect:Dynamic, es:Null<EventState>) {
 			effect.setMatrix("kernelMatrix", this.kernelMatrix);
 		}
 	}

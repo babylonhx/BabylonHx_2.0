@@ -3,6 +3,8 @@ package com.babylonhx.postprocess;
 import com.babylonhx.cameras.Camera;
 import com.babylonhx.materials.Effect;
 import com.babylonhx.materials.textures.Texture;
+import com.babylonhx.tools.EventState;
+
 /**
  * ...
  * @author Krtolica Vujadin
@@ -17,12 +19,12 @@ import com.babylonhx.materials.textures.Texture;
 	public function new(name:String, ratio:Float, camera:Camera, ?samplingMode:Int, ?engine:Engine, reusable:Bool = false) {
 		super(name, "fxaa", ["texelSize"], null, ratio, camera, samplingMode, engine, reusable);
 		
-		this.onSizeChangedObservable.add(function() {
+		this.onSizeChangedObservable.add(function(effect: Dynamic, es:Null<EventState>) {
 			this.texelWidth = 1.0 / this.width;
 			this.texelHeight = 1.0 / this.height;
 		});
 		
-		this.onApplyObservable.add(function(effect:Effect) {
+		this.onApplyObservable.add(function(effect:Dynamic, es:Null<EventState>) {
 			effect.setFloat2("texelSize", this.texelWidth, this.texelHeight);
 		});
 	}

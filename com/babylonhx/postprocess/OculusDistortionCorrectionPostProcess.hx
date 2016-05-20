@@ -4,6 +4,8 @@ import com.babylonhx.cameras.Camera;
 import com.babylonhx.math.Vector2;
 import com.babylonhx.materials.Effect;
 import com.babylonhx.materials.textures.Texture;
+import com.babylonhx.tools.EventState;
+
 /**
  * ...
  * @author Krtolica Vujadin
@@ -36,14 +38,14 @@ import com.babylonhx.materials.textures.Texture;
 		this._lensCenterOffset = cameraSettings.LensCenterOffset;
 
 
-	   this.onSizeChanged = function() {
+	   this.onSizeChanged = function(effect: Dynamic, es:Null<EventState>) {
 			this.aspectRatio = this.width * .5 / this.height;
 			this._scaleIn = new Vector2(2, 2 / this.aspectRatio);
 			this._scaleFactor = new Vector2(.5 * (1 / this._postProcessScaleFactor), .5 * (1 / this._postProcessScaleFactor) * this.aspectRatio);
 			this._lensCenter = new Vector2(this._isRightEye ? 0.5 - this._lensCenterOffset * 0.5 :0.5 + this._lensCenterOffset * 0.5, 0.5);
 		};
 		
-		this.onApply = function(effect:Effect) {
+		this.onApply = function(effect:Dynamic, es:Null<EventState>) {
 			effect.setFloat2("LensCenter", this._lensCenter.x, this._lensCenter.y);
 			effect.setFloat2("Scale", this._scaleFactor.x, this._scaleFactor.y);
 			effect.setFloat2("ScaleIn", this._scaleIn.x, this._scaleIn.y);

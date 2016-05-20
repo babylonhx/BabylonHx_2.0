@@ -93,6 +93,24 @@ BabylonHx Demos
 	<a href="http://babylonhx.github.io/instances/" target="_blank" />
 		<img src="http://babylonhx.github.io/instances/instances-sm.jpg" alt="instances"   />
 	</a>
+
+
+
+	<a href="http://babylonhx.github.io/pbr_rendering/" target="_blank" />
+		<img src="http://babylonhx.github.io/pbr_rendering/pbr_rendering-sm.jpg" alt="pbr_rendering"   />
+	</a>
+	<a href="http://babylonhx.github.io/starfield/" target="_blank" />
+		<img src="http://babylonhx.github.io/starfield/starfield-sm.jpg" alt="starfield"   />
+	</a>
+	<a href="http://babylonhx.github.io/nightvision/" target="_blank" />
+		<img src="http://babylonhx.github.io/nightvision/nightvision-sm.jpg" alt="nightvision"   />
+	</a>
+	<a href="http://babylonhx.github.io/depthoffield/" target="_blank" />
+		<img src="http://babylonhx.github.io/depthoffield/depthoffield-sm.jpg"  alt="depthoffield"  />
+	</a>
+	<a href="http://babylonhx.github.io/heart/" target="_blank" />
+		<img src="http://babylonhx.github.io/heart/heart-sm.jpg" alt="heart"   />
+	</a>
 </div>
 
 

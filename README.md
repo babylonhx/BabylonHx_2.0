@@ -61,9 +61,7 @@ BabylonHx Demos
 	</a>
 	<a href="http://babylonhx.github.io/physics2/" target="_blank" />
 		<img src="http://babylonhx.github.io/physics2/physics2-sm.jpg" alt="physics2"   />
-	</a>
-
-	<a href="http://babylonhx.github.io/ssao/" target="_blank" />
+	</a><a href="http://babylonhx.github.io/ssao/" target="_blank" />
 		<img src="http://babylonhx.github.io/ssao/ssao-sm.jpg" alt="ssao"   />
 	</a>
 	<a href="http://babylonhx.github.io/fog/" target="_blank" />
@@ -92,11 +90,7 @@ BabylonHx Demos
 	</a>
 	<a href="http://babylonhx.github.io/instances/" target="_blank" />
 		<img src="http://babylonhx.github.io/instances/instances-sm.jpg" alt="instances"   />
-	</a>
-
-
-
-	<a href="http://babylonhx.github.io/pbr_rendering/" target="_blank" />
+	</a><a href="http://babylonhx.github.io/pbr_rendering/" target="_blank" />
 		<img src="http://babylonhx.github.io/pbr_rendering/pbr_rendering-sm.jpg" alt="pbr_rendering"   />
 	</a>
 	<a href="http://babylonhx.github.io/starfield/" target="_blank" />
